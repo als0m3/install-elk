@@ -19,3 +19,11 @@ server.port: 5601
 elasticsearch.hosts: ${elk_var_elasticsearch_hosts}
 EOF
 )
+
+echo "${content}" > /etc/kibana/kibana.yml
+
+# Start Kibana
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable kibana.service
+
+sudo systemctl start kibana.service
