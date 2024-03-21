@@ -8,44 +8,45 @@ sudo dpkg -i elasticsearch-8.12.2-amd64.deb
 
 
 # Configure Elasticsearch
-content="""
-# Custom Elasticsearch Configuration\n
-# Date: ${es_creation_date}\n
-\n
---- Cluster\n
-cluster.name: ${es_cluster_name}\n
-\n
---- Nodes\n
-node.name: ${es_data_node_name}\n
-node.roles: [ master, data ]\n
-\n
-\n
---- Paths\n
-path.data: /var/lib/elasticsearch\n
-path.logs: /var/log/elasticsearch\n
-\n
-\n
---- Network\n
-network.host: 0.0.0.0\n
-http.port: 9200\n
-\n
-\n
---- Discovery\n
-discovery.seed_hosts: ${es_seed_hosts}\n
-\n
-\n
---- Security\n
-xpack.security.enabled: true\n
-xpack.security.enrollment.enabled: true\n
-xpack.security.http.ssl:\n
-    enabled: false\n
-xpack.security.transport.ssl:\n
-    enabled: false\n
-\n
-cluster.initial_master_nodes: ${initial_master_nodes}\n
-"""
+content=$(cat <<EOF
+# ======================== Elasticsearch Configuration =========================
+# DATE ${es_creation_date}
 
-echo $content >> /etc/elasticsearch/elasticsearch.yml
+# ---------------------------------- Cluster -----------------------------------
+cluster.name: ${es_cluster_name}
+
+# ----------------------------------- Nodes ------------------------------------
+node.name: ${es_data_node_name}
+node.roles: [ master, data ]
+
+
+# ----------------------------------- Paths ------------------------------------
+path.data: /var/lib/elasticsearch
+path.logs: /var/log/elasticsearch
+
+
+# ---------------------------------- Network -----------------------------------
+network.host: 0.0.0.0
+http.port: 9200
+
+
+# --------------------------------- Discovery ----------------------------------
+discovery.seed_hosts: ${es_seed_hosts}
+
+
+# ---------------------------------- Security ----------------------------------
+xpack.security.enabled: true
+xpack.security.enrollment.enabled: true
+xpack.security.http.ssl:
+    enabled: false
+xpack.security.transport.ssl:
+    enabled: false
+
+cluster.initial_master_nodes: ${initial_master_nodes}
+EOF
+)
+
+echo "${content}" > /etc/elasticsearch/elasticsearch.yml
 
 # Start Elasticsearch
 sudo /bin/systemctl daemon-reload
