@@ -35,8 +35,8 @@ discovery.seed_hosts: ${es_seed_hosts}
 
 
 # ---------------------------------- Security ----------------------------------
-xpack.security.enabled: true
-xpack.security.enrollment.enabled: true
+xpack.security.enabled: false
+xpack.security.enrollment.enabled: false
 xpack.security.http.ssl:
     enabled: false
 xpack.security.transport.ssl:
