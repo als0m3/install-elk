@@ -2,9 +2,13 @@
 
 # Installing Elasticsearch
 wget --quiet https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.12.2-amd64.deb
-wget --quiet https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.12.2-amd64.deb.sha512
 shasum -a 512 -c elasticsearch-8.12.2-amd64.deb.sha512 
 sudo dpkg -i elasticsearch-8.12.2-amd64.deb
+
+
+# Installing Metricbeat
+wget --quiet https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.12.2-amd64.deb
+sudo dpkg -i metricbeat-8.12.2-amd64.deb
 
 
 # Configure Elasticsearch
@@ -17,7 +21,7 @@ cluster.name: ${es_cluster_name}
 
 # ----------------------------------- Nodes ------------------------------------
 node.name: ${es_data_node_name}
-node.roles: [ master, data ]
+node.roles: [ master, data, data_cold, data_content, data_hot, data_warm, ingest, ml, remote_cluster_client, transform]
 
 
 # ----------------------------------- Paths ------------------------------------
@@ -53,3 +57,8 @@ sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable elasticsearch.service
 
 sudo systemctl start elasticsearch.service
+
+
+# Configure Metricbeat
+metricbeat modules enable elasticsearch-xpack
+
