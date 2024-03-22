@@ -13,7 +13,7 @@ content=$(cat <<EOF
 
 # ---------------------------- Config Reloading -------------------------------
 metricbeat.config.modules:
-  path: ${path.config}/modules.d/*.yml
+  path: /etc/metricbeat/modules.d/*.yml
 
   reload.enabled: false
 
@@ -39,7 +39,7 @@ processors:
 EOF
 )
 
-echo "${content}" > /etc/metricbeat/metricbeat.yml
+echo "${content}" | sudo tee  /etc/metricbeat/metricbeat.yml > /dev/null
 
 # Start Metricbeat
 sudo /bin/systemctl daemon-reload
