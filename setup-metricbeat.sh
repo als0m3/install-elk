@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 # Installing Metricbeat
 wget --quiet https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.12.2-amd64.deb
@@ -8,32 +8,22 @@ metricbeat modules enable elasticsearch-xpack
 
 # Configure Metricbeat
 content=$(cat <<EOF
-###################### Metricbeat Configuration Example #######################
+# ======================== Metricbeat Configuration =========================
+# DATE ${es_creation_date}
 
-# =========================== Modules configuration ============================
-
+# ---------------------------- Config Reloading -------------------------------
 metricbeat.config.modules:
   path: ${path.config}/modules.d/*.yml
 
   reload.enabled: false
 
-# ======================= Elasticsearch template setting =======================
-
+# --------------------------- Elasticsearch Module ----------------------------
 setup.template.settings:
   index.number_of_shards: 1
   index.codec: best_compression
 
-
-# ================================== General ===================================
-
-# ================================= Dashboards =================================
-
-# =================================== Kibana ===================================
+# ------------------------------ Kibana Output --------------------------------
 setup.kibana:
-
-# =============================== Elastic Cloud ================================
-
-# ================================== Outputs ===================================
 
 # ---------------------------- Elasticsearch Output ----------------------------
 output.elasticsearch:
@@ -41,17 +31,11 @@ output.elasticsearch:
   preset: balanced
 
 # ------------------------------ Logstash Output -------------------------------
-# ================================= Processors =================================
 processors:
   - add_host_metadata: ~
   - add_cloud_metadata: ~
   - add_docker_metadata: ~
   - add_kubernetes_metadata: ~
-
-# ================================== Logging ===================================
-# ============================= X-Pack Monitoring ==============================
-# ============================== Instrumentation ===============================
-# ================================= Migration ==================================
 EOF
 )
 
@@ -61,4 +45,4 @@ echo "${content}" > /etc/metricbeat/metricbeat.yml
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable metricbeat.service
 
-sudo systemctl start metricbeat.service
+sudo /bin/systemctl start metricbeat.service

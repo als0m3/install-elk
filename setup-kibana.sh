@@ -1,8 +1,7 @@
 #!bin/bash
 
 # Installing Kibana
-wget --quiet https://artifacts.elastic.co/downloads/kibana/kibana-8.12.2-amd64.deb
-shasum -a 512 kibana-8.12.2-amd64.deb 
+wget https://artifacts.elastic.co/downloads/kibana/kibana-8.12.2-amd64.deb
 sudo dpkg -i kibana-8.12.2-amd64.deb
 
 # Configure Kibana
@@ -26,4 +25,4 @@ echo "${content}" > /etc/kibana/kibana.yml
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable kibana.service
 
-sudo systemctl start kibana.service
+sudo /bin/systemctl start kibana.service
