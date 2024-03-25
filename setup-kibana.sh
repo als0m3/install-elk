@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 # Installing Kibana
 wget https://artifacts.elastic.co/downloads/kibana/kibana-8.12.2-amd64.deb

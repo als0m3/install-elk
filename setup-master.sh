@@ -33,12 +33,15 @@ discovery.seed_hosts: ${es_seed_hosts}
 
 
 # ---------------------------------- Security ----------------------------------
-xpack.security.enabled: false
-xpack.security.enrollment.enabled: false
+xpack.security.enabled: true
+xpack.security.enrollment.enabled: true
 xpack.security.http.ssl:
     enabled: false
 xpack.security.transport.ssl:
-    enabled: false
+  enabled: true
+  verification_mode: certificate
+  keystore.path: certs/elastic-certificates.p12
+  truststore.path: certs/elastic-certificates.p12
 
 cluster.initial_master_nodes: ${initial_master_nodes}
 EOF
