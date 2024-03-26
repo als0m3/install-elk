@@ -41,7 +41,9 @@ xpack.security.transport.ssl:
   enabled: true
   verification_mode: certificate
   keystore.path: certs/elastic-certificates.p12
+  keystore.password: yes
   truststore.path: certs/elastic-certificates.p12
+  truststore.password: yes
 
 cluster.initial_master_nodes: ${initial_master_nodes}
 EOF
