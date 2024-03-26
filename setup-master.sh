@@ -36,14 +36,18 @@ discovery.seed_hosts: ${es_seed_hosts}
 xpack.security.enabled: true
 xpack.security.enrollment.enabled: true
 xpack.security.http.ssl:
-    enabled: false
+    enabled: true
+    verification_mode: certificate
+    certificate_authorities: ["/etc/elasticsearch/certs/ca.crt"]
+    certificate: /etc/elasticsearch/certs/node.crt
+    key: /etc/elasticsearch/certs/node.key
 xpack.security.transport.ssl:
   enabled: true
   verification_mode: certificate
-  keystore.path: certs/elastic-certificates.p12
-  keystore.secure_password: yes
-  truststore.path: certs/elastic-certificates.p12
-  truststore.secure_password: yes
+  certificate_authorities: ["/etc/elasticsearch/certs/ca.crt"]
+  certificate: /etc/elasticsearch/certs/node.crt
+  key: /etc/elasticsearch/certs/node.key
+
 
 cluster.initial_master_nodes: ${initial_master_nodes}
 EOF
@@ -51,7 +55,9 @@ EOF
 
 echo "${content}" > /etc/elasticsearch/elasticsearch.yml
 
-sudo mv /elastic-certificates.p12 /etc/elasticsearch/certs/elastic-certificates.p12
+sudo mv /ca.crt /etc/elasticsearch/certs/ca.crt
+sudo mv /node.crt /etc/elasticsearch/certs/node.crt
+sudo mv /node.key /etc/elasticsearch/certs/node.key
 
 # Start Elasticsearch
 sudo /bin/systemctl daemon-reload
