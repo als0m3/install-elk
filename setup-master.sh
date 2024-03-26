@@ -49,6 +49,8 @@ EOF
 
 echo "${content}" > /etc/elasticsearch/elasticsearch.yml
 
+sudo mv /elastic-certificates.p12 /etc/elasticsearch/certs/elastic-certificates.p12
+
 # Start Elasticsearch
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable elasticsearch.service
