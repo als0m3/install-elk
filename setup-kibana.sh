@@ -17,11 +17,14 @@ server.port: 5601
 # ------------------------------- Elasticsearch --------------------------------
 elasticsearch.hosts: ${elk_var_elasticsearch_hosts}
 
+elasticsearch.username: "kibana_system"
+elasticsearch.password: ""
+
 elasticsearch.ssl:
   certificateAuthorities: ["/etc/kibana/certs/ca.crt"]
   verificationMode: certificate
   certificate: /etc/kibana/certs/node.crt
-    key: /etc/kibana/certs/node.key
+  key: /etc/kibana/certs/node.key
 
 server.ssl:
     enabled: true
@@ -34,6 +37,7 @@ EOF
 
 echo "${content}" > /etc/kibana/kibana.yml
 
+sudo mkdir /etc/kibana/certs
 sudo mv /ca.crt /etc/kibana/certs/ca.crt
 sudo mv /node.crt /etc/kibana/certs/node.crt
 sudo mv /node.key /etc/kibana/certs/node.key

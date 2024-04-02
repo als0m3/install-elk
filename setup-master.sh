@@ -36,7 +36,7 @@ discovery.seed_hosts: ${es_seed_hosts}
 xpack.security.enabled: true
 xpack.security.enrollment.enabled: true
 xpack.security.http.ssl:
-    enabled: true
+    enabled: false
     verification_mode: certificate
     certificate_authorities: ["/etc/elasticsearch/certs/ca.crt"]
     certificate: /etc/elasticsearch/certs/node.crt
